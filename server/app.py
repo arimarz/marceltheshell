@@ -1,6 +1,6 @@
 from flask import  request, make_response, session, abort, jsonify
 from flask_restful import  Resource
-from models import User, Post, Like, Comment
+from models import User, Post, Like, Comment    
 from config import db, api, app
 
 
@@ -13,6 +13,86 @@ class Users(Resource):
         )
         return response
 api.add_resource(Users, '/users')
+
+class UserByID(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            abort(404, "User not found")
+        user_dict = user.to_dict()
+        response = make_response(
+            user_dict,
+            200
+        )
+        return response
+api.add_resource(UserByID, '/user/<int:id>')
+
+class Posts(Resource):
+    def get(self):
+        posts = [post.to_dict() for post in Post.query.all()]
+        response = make_response(
+            posts,
+            200
+        )
+        return response
+
+    def post(self):
+        try:
+            data = request.get_json()
+            post = Post(
+                quote=data["quote"],
+            original=data["original"],
+            user_id=data['user_id'],
+            image=data["image"]
+            ) 
+
+            db.session.add(post)
+            db.session.commit()
+        except Exception as e:
+            return make_response({
+                "errors": [e.__str__()]
+            }, 422)
+        response = make_response(
+            post.to_dict(),
+            201
+        )
+        return response
+api.add_resource(Posts, '/posts')
+
+class PostByID(Resource):
+    def get(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            abort(404, "post not found")
+        post_dict = post.to_dict()
+        response = make_response(
+            post_dict,
+            200
+        )
+        return response
+
+    def patch(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            return make_response({'error': 'Post not found'}, 404)
+        data= request.get_json()
+        for attr in data:
+            setattr(post, attr, data[attr])
+        db.session.add(post)
+        db.session.commit()
+
+        return make_response(post.to_dict(), 202)
+
+    def delete(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            return make_response({"error": "Post not found"}, 404)
+        db.session.delete(post)
+        db.session.commit()
+
+        return make_response('', 204)
+
+api.add_resource(PostByID, '/posts/<int:id>')
 
 class Signup(Resource):
     def post(self):
