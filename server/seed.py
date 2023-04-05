@@ -8,7 +8,7 @@ from datetime import datetime
 
 print('creating users')
 users_list = [
-    {"username": "shellyBoy", "password": "@samDAbest", "name": "Ari", "avatar": "http://www.campustimes.org/wp-content/uploads/2022/10/Sunahra_Tanvir_Marcel_CT-800x560-c-default.png"},
+    {"username": "shellyBoy", "password": "@snailY", "name": "Ari", "avatar": "http://www.campustimes.org/wp-content/uploads/2022/10/Sunahra_Tanvir_Marcel_CT-800x560-c-default.png"},
     {"username": "snailMail", "password": "@SlowAndSteady", "name": "Marcelina", "avatar": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fshop.a24films.com%2Fproducts%2Fmarcel-pin&psig=AOvVaw1WqII8A-Y3zre0Fgh-K5-d&ust=1680750926704000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCJCHt63jkf4CFQAAAAAdAAAAABAD"},
     {"username": "TinyConch", "password": "@ShellyParadise", "name": "Sebastian", "avatar": "https://ih1.redbubble.net/image.3801694980.8997/st,small,507x507-pad,600x600,f8f8f8.jpg"},
     {"username": "MrTinyShell", "password": "@TinyBFF", "name": "Finn", "avatar": "https://external-preview.redd.it/TDTD0M1IzU79UAoMFKAQpbrzjQZemmDUXgTUOnlhM2M.jpg?auto=webp&s=c29dcc299446a772b90e399c8815b369087d5919"},
