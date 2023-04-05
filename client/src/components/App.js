@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-// import Home from '../Home.js';
-import Login from '../Login.js';
-// import Profile from '../Profile.js';
-// import NavBar from '../NavBar.js';
-// import NewPost from '../NewPost.js';
-// import Posts from '../Posts.js';
-// import EditPost from '../EditPost.js';
-// import PostsList from '../PostsList.js';
+// import Home from './Home.js';
+import Login from './Login.js';
+// import Profile from './Profile.js';
+import NavBar from './NavBar.js';
+// import NewPost from './NewPost.js';
+// import Posts from './Posts.js';
+// import EditPost from './EditPost.js';
+// import PostsList from './PostsList.js';
 
 function App() {
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         fetchUser()
@@ -31,32 +31,33 @@ function App() {
         })
     )
 
-  return (
-    <>
-            <div className='body'>
-                <Switch>
-                    {/* <Route path="/" exact>
-                        <Home user={user}/>
-                    </Route> */}
-                    <Route path="/login" exact>
-                        <Login setUser={setUser}/>
-                    </Route>
-                </Switch>  
-            </div>
-        </>
+    return (
+    <div>
+        <NavBar user={user} setUser={setUser}/>
+        <div className='body'>
+            <Switch>
+                {/* <Route path="/" exact>
+                    <Home user={user}/>
+                </Route> */}
+                <Route exact path="/login">
+                    <Login setUser={setUser}/>
+                </Route>
+            </Switch>  
+        </div>
+    </div>
     );
 }
 
-export default App;
-// function WrappedApp() {
-//   return (
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   )
-// }
+//export default App;
+function WrappedApp() {
+    return (
+        <BrowserRouter>
+        <App />
+        </BrowserRouter>
+    )
+}
 
-// export default WrappedApp;
+export default WrappedApp;
 //<NavBar user={user} setUser={setUser}></NavBar>
 // <Route path="/profile/:id" exact>
 //                         <Profile user={user}/>

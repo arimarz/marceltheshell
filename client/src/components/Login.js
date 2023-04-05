@@ -29,7 +29,7 @@ const signUpValidationSchema = Yup.object().shape({
     avatar: Yup.string().required('Required'),
 });
 
-function LogIn() {
+function Login({user}) {
     const history = useHistory();
     const [showSignUp, setShowSignUp] = useState(false);
 
@@ -216,4 +216,4 @@ function LogIn() {
     )
 }
 
-export default LogIn;
+export default Login;
