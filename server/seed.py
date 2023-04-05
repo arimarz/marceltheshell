@@ -1,4 +1,4 @@
-from random import random, choice as rc, randint
+from random import random, randint, choice as rc
 from app import app
 from models import db, User, Post, Comment, Like
 from datetime import datetime
@@ -34,9 +34,8 @@ def make_users():
     for user_dict in users_list:
         user = User(
             username=user_dict["username"],
-            email=user_dict["email"],
-            first_name=user_dict["first_name"],
-            last_name=user_dict["last_name"]
+            name=user_dict["name"],
+            avatar=user_dict["avatar"]
         )
         user.password_hash = user_dict["password"]
         users.append(user)
@@ -96,9 +95,9 @@ print('posts committed')
 print('creating likes')
 likes_list = []
 
-for i in range(50):
-    user_id = random.rc(1, 13)
-    post_id = random.rc(1, 22)
+for i in range(1000):
+    user_id = randint(1, 13)
+    post_id = randint(1, 22)
     likes_list.append({'user_id': user_id, 'post_id': post_id})
 print('likes created')
 
@@ -121,8 +120,34 @@ def make_likes():
 print('likes committed')
 
 print('creating comments')
-comments_list = [
-    {'user_id': 1, "post_id": 1}]
+comments_list = []
+comments_random = [
+    "Marcel the Shell is my spirit animal.",
+    "I can't get enough of Marcel's adorable little voice.",
+    "This just made my day. Thank you for sharing, Marcel!",
+    "Marcel is the cutest thing on the internet, hands down.",
+    "I could listen to Marcel talk about anything and everything for hours.",
+    "Marcel is proof that good things come in small packages.",
+    "This video always puts a smile on my face. Marcel is too cute for words.",
+    "Marcel the Shell is the perfect example of less is more.",
+    "I love how Marcel finds wonder in the smallest things.",
+    "Marcel is such a unique and creative character.",
+    "Marcel's positive attitude is contagious.",
+    "This is exactly what I needed to brighten my day. Thanks, Marcel!",
+    "Marcel's adventures always leave me wanting more.",
+    "I never thought I'd say this, but Marcel the Shell might just be my favorite celebrity.",
+    "Marcel's imagination knows no bounds.",
+    "Marcel is the hero we all need in our lives.",
+    "Marcel's outlook on life is so refreshing.",
+    "Marcel is proof that even the smallest creatures can have the biggest personalities.",
+    "I wish Marcel could narrate my life.",
+    "Marcel the Shell is a national treasure."
+]
+for i in range(100):
+    user_id = randint(1, 13)
+    post_id = randint(1, 22)
+    comment = rc(comments_random)
+    comments_list.append({'user_id': user_id, 'post_id': post_id, 'comment': comment})
 print('comments created')
 
 # Add comments to database
@@ -135,7 +160,8 @@ def make_comments():
     for comment_dict in comments_list:
         comment = Comment(
             user_id=comment_dict['user_id'],
-            post_id=comment_dict['post_id']
+            post_id=comment_dict['post_id'],
+            comment=comment_dict['comment']
         )
         comments.append(comment)
 
