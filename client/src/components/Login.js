@@ -59,7 +59,7 @@ function Login({user}) {
         if (response.ok) {
         const user = await response.json();
         sessionStorage.setItem('user', JSON.stringify(user));
-        history.push('/profile');
+        history.push('/profile/'+user.id);
         } else {
         actions.setSubmitting(false);
         actions.setFieldError('general', 'Login failed');
@@ -84,7 +84,7 @@ function Login({user}) {
         const user = await response.json();
         localStorage.setItem('user', JSON.stringify(user));
         //need to update this from localstorage
-        history.push('/profile');
+        history.push('/profile/'+user.id);
         } else {
         actions.setSubmitting(false);
         actions.setFieldError('general', 'Sign-up failed');

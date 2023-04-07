@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-// import Home from './Home.js';
+import Home from './Home.js';
 import Login from './Login.js';
-// import Profile from './Profile.js';
+import Profile from './Profile.js';
 import NavBar from './NavBar.js';
 // import NewPost from './NewPost.js';
 // import Posts from './Posts.js';
 // import EditPost from './EditPost.js';
 // import PostsList from './PostsList.js';
+import Header from './Header.js';
 
 function App() {
     const [user, setUser] = useState(null);
@@ -33,14 +34,18 @@ function App() {
 
     return (
     <div>
+        <Header/>
         <NavBar user={user} setUser={setUser}/>
         <div className='body'>
             <Switch>
-                {/* <Route path="/" exact>
+                <Route path="/" exact>
                     <Home user={user}/>
-                </Route> */}
+                </Route>
                 <Route exact path="/login">
                     <Login setUser={setUser}/>
+                </Route>
+                <Route path="/profile/:id" exact>
+                        <Profile user={user}/>
                 </Route>
             </Switch>  
         </div>
