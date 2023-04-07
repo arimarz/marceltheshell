@@ -19,17 +19,17 @@ class UserByID(Resource):
         user = User.query.filter_by(id=id).first()
         if not user:
             abort(404, "User not found")
-        user_dict = user.to_dict()
+        user_dict = user.to_dict(rules=('posts', '-posts.user_id'))
         response = make_response(
             user_dict,
             200
         )
         return response
-api.add_resource(UserByID, '/user/<int:id>')
+api.add_resource(UserByID, '/users/<int:id>')
 
 class Posts(Resource):
     def get(self):
-        posts = [post.to_dict() for post in Post.query.all()]
+        posts = [post.to_dict(rules= ('likes', 'comments', '-likes.post_id', '-likes.user_id', '-comments.post_id', '-comments.user_id')) for post in Post.query.all()]
         response = make_response(
             posts,
             200
@@ -93,6 +93,14 @@ class PostByID(Resource):
         return make_response('', 204)
 
 api.add_resource(PostByID, '/posts/<int:id>')
+
+class Recordings(Resource): #check all of this
+    def post(self):
+        audio_file = request.files.get("audio")
+        # Store the audio file in the database or on the filesystem
+        return {"message": "Audio file saved successfully"}
+
+api.add_resource(Recordings, "/recording")
 
 class Signup(Resource):
     def post(self):
