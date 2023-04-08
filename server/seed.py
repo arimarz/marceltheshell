@@ -95,7 +95,7 @@ print('posts committed')
 print('creating likes')
 likes_list = []
 
-for i in range(1000):
+for i in range(100):
     user_id = randint(1, 13)
     post_id = randint(1, 22)
     likes_list.append({'user_id': user_id, 'post_id': post_id})

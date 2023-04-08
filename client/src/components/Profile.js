@@ -68,7 +68,7 @@ function Profile({user}) {
     
     const {username, name, avatar, posts} = profile
     console.log(posts)
-        const postsToDisplay = posts.map((post) => {
+        const postsToDisplay = posts?.map((post) => {
             return (
             <li key={post.id}>
                 <img src={post.image} alt="Post Image" />

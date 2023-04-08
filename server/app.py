@@ -1,5 +1,5 @@
 from flask import  request, make_response, session, abort, jsonify
-from flask_restful import  Resource
+from flask_restful import  Resource, reqparse
 from models import User, Post, Like, Comment    
 from config import db, api, app
 
@@ -29,13 +29,13 @@ api.add_resource(UserByID, '/users/<int:id>')
 
 class Posts(Resource):
     def get(self):
-        posts = [post.to_dict(rules= ('likes', 'comments', '-likes.post_id', '-likes.user_id', '-comments.post_id', '-comments.user_id')) for post in Post.query.all()]
+        posts = [post.to_dict(rules= ('is_liked', 'liked_amount', 'comments', '-likes.post_id', '-likes.user_id', '-comments.post_id', '-comments.user_id')) for post in Post.query.all()]
         response = make_response(
             posts,
             200
         )
         return response
-
+    
     def post(self):
         try:
             data = request.get_json()
@@ -93,6 +93,35 @@ class PostByID(Resource):
         return make_response('', 204)
 
 api.add_resource(PostByID, '/posts/<int:id>')
+
+class Likes(Resource):
+    def get(self, post_id):
+        likes = Like.query.filter_by(post_id=post_id).all()
+        liked_amounts = len(likes)
+        return {'liked_amounts': liked_amounts}, 200
+    
+    def post(self, post_id):
+        parser = reqparse.RequestParser()
+        parser.add_argument('user_id', type=int, required=True)
+        args = parser.parse_args()
+        
+        like = Like(user_id=args['user_id'], post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+        
+        return make_response(like.to_dict(), 201)
+    
+    def delete(self, post_id, user_id):
+        like = Like.query.filter_by(user_id=user_id, post_id=post_id).first()
+        if not like:
+            return {'error': 'Like not found'}, 404
+        
+        db.session.delete(like)
+        db.session.commit()
+        
+        return {'message': 'Like deleted successfully'}, 200
+
+api.add_resource(Likes, '/posts/<int:post_id>/likes', '/posts/<int:post_id>/likes/<int:user_id>')
 
 class Recordings(Resource): #check all of this
     def post(self):

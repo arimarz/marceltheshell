@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from flask import session
 #from sqlalchemy import Date
 import re
 
@@ -77,7 +78,17 @@ class Post(db.Model, SerializerMixin):
     likes = db.relationship('Like', backref='post')
     comments = db.relationship('Comment', backref='post')
     serialize_rules = ('-likes', '-comments')
-
+    @property
+    def is_liked(self):
+        return True if Like.query.filter_by(user_id=session['user_id'], post_id=self.id).first() else False
+    
+    @property
+    def liked_amount(self):
+        return len(Like.query.filter_by(post_id=self.id).all())
+        #or len(self.likes)
+        # import ipdb
+        # ipdb.set_trace()
+    
     @validates('quote')
     def validate_quote(self, key, value):
         if not value:
