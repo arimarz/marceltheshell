@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from './Post'
+import {VStack, Img} from '@chakra-ui/react'
 
 function Home({user}) {
     const [posts, setPosts] = useState([]);
@@ -20,12 +21,12 @@ function Home({user}) {
 
     console.log(posts)
 
-    const postsCard = posts.map(post => <Post key={post.id} post={post} setPosts={setPosts}/>)
+    const postsCard = posts.map(post => <Post key={post.id} post={post} setPosts={setPosts} user={user}/>)
 
     return (
-        <div>
+        <VStack>
             <ul>{postsCard}</ul>
-        </div>
+        </VStack>
     )
 }
 
