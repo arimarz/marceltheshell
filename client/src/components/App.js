@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import UserContext from './UserContext';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Flex, Box } from "@chakra-ui/react";
 
 import Home from './Home.js';
 import Login from './Login.js';
@@ -33,25 +35,33 @@ function App() {
     )
 
     return (
-    <div>
-        <Header/>
-        <NavBar user={user} setUser={setUser}/>
-        <div className='body'>
-            <Switch>
-                <Route path="/" exact>
-                    <Home user={user}/>
-                </Route>
-                <Route exact path="/login">
-                    <Login setUser={setUser}/>
-                </Route>
-                <Route path="/profile/:id" exact>
-                        <Profile user={user}/>
-                </Route>
-            </Switch>  
-        </div>
-    </div>
+        <UserContext.Provider value={{ user, setUser }}>
+        <Flex flexDirection="row" height="100vh">
+            <Box bg="#7f7c5b" color="#7f7c5b" width="250px"
+            position='fixed' zIndex={100}>
+                <NavBar/>
+            </Box>
+            <Flex flexDirection="column" flexGrow={1}>
+                <Header position="relative" zIndex={50}/>
+                <Box className='body' flexGrow={1}>
+                    <Switch>
+                        <Route path="/" exact>
+                            <Home/>
+                        </Route>
+                        <Route exact path="/login">
+                            <Login/>
+                        </Route>
+                        <Route path="/profile/:id" exact>
+                            <Profile/>
+                        </Route>
+                    </Switch>  
+                </Box>
+            </Flex>
+        </Flex>
+    </UserContext.Provider>
     );
 }
+
 
 //export default App;
 function WrappedApp() {

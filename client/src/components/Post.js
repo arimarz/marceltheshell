@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import {Box, Img, HStack, IconButton, Text} from '@chakra-ui/react'
+import React, { useState, useEffect, useContext } from 'react';
+import {Box, Img, HStack, IconButton, Text, Button} from '@chakra-ui/react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import UserContext from './UserContext';
+import liked from '../pictures/liked_shell.png'
+import unliked from '../pictures/unliked_shell.jpg'
 
-function Post({ user, post, setPosts}) {
+
+
+function Post({ post, setPosts}) {
     const [showAllComments, setShowAllComments] = useState(false);
     const { image, quote, original, user_id, created_at } = post;
+    const {user} = useContext(UserContext)
 
     const commentsToDisplay = showAllComments ? post.comments : post.comments.slice(0, 5);
 
@@ -23,7 +29,7 @@ function Post({ user, post, setPosts}) {
         fetch(`/posts/${post.id}/likes/${user.id}`, { method: 'DELETE' })
             .then((res) => {
             if (res.ok) {
-                setPosts((posts)=> posts.map((onePost)=> onePost.id === post.id ? {...onePost, is_liked: false}: onePost))
+                setPosts((posts)=> posts.map((onePost)=> onePost.id === post.id ? {...onePost, is_liked: false, liked_amount: onePost.liked_amount - 1}: onePost))
             } else {
                 console.log(res.statusText);
             }
@@ -31,17 +37,6 @@ function Post({ user, post, setPosts}) {
             .catch((err) => {
             console.log(err);
             })
-            .then(() => {
-                // Update the number of likes for this post
-                fetch(`/posts/${post.id}/likes`)
-                    .then((res) => res.json())
-                    .then((likes) => {
-                    setPosts((posts) => posts.map((onePost) => onePost.id === post.id ? {...onePost, liked_amount: likes.length} : onePost));
-                    })
-                    .catch((err) => {
-                    console.log(err);
-                    });
-                });
         } else {
         fetch(`/posts/${post.id}/likes`, {
             method: 'POST',
@@ -51,7 +46,7 @@ function Post({ user, post, setPosts}) {
             .then((res) => {
             if (res.ok) {
                 setPosts((posts)=> {
-                    return posts.map((onePost)=> onePost.id === post.id ? {...onePost, is_liked: true} : onePost)
+                    return posts.map((onePost)=> onePost.id === post.id ? {...onePost, is_liked: true, liked_amount: onePost.liked_amount + 1} : onePost)
                 })
             } else {
                 console.log(res.statusText);
@@ -60,17 +55,6 @@ function Post({ user, post, setPosts}) {
             .catch((err) => {
             console.log(err);
             })
-            .then(() => {
-                // Update the number of likes for this post
-                fetch(`/posts/${post.id}/likes`)
-                    .then((res) => res.json())
-                    .then((likes) => {
-                        setPosts((posts) => posts.map((onePost) => onePost.id === post.id ? {...onePost, liked_amount: likes.length} : onePost));
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                });
             }
         };
 
@@ -82,13 +66,20 @@ function Post({ user, post, setPosts}) {
             <p>{original}</p>
         </Box>
         <Box>
-            <IconButton
+            <Img
             aria-label="like"
-            icon={post.is_liked ? <FaHeart /> : <FaRegHeart />}
+            src={post.is_liked ? {liked} : {unliked} }
             onClick={handleLikeClick}
             />
             <p>Likes: {post.liked_amount}</p>
-            <p>{commentItems}</p>
+            <Box>
+            {commentItems}
+            {post.comments.length > 5 && (
+            <Button onClick={() => setShowAllComments(!showAllComments)}>
+                {showAllComments ? "Hide comments" : "Show all comments"}
+            </Button>
+            )}
+        </Box>
         </Box>
         </HStack>
     );
