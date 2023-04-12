@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserContext from './UserContext';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Flex, Box } from "@chakra-ui/react";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Home from './Home.js';
 import Login from './Login.js';
@@ -12,6 +13,21 @@ import NavBar from './NavBar.js';
 // import EditPost from './EditPost.js';
 // import PostsList from './PostsList.js';
 import Header from './Header.js';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#3f51b5',
+        },
+        secondary: {
+            main: '#f50057',
+        },
+        },
+        typography: {
+        fontFamily: 'Roboto, sans-serif',
+        },
+        spacing: 8,
+    });
 
 function App() {
     const [user, setUser] = useState(null);
@@ -65,12 +81,14 @@ function App() {
 
 //export default App;
 function WrappedApp() {
-    return (
-        <BrowserRouter>
-        <App />
-        </BrowserRouter>
-    )
-}
+        return (
+        <ThemeProvider theme={theme}>
+            <BrowserRouter>
+            <App />
+            </BrowserRouter>
+        </ThemeProvider>
+        )
+    }
 
 export default WrappedApp;
 //<NavBar user={user} setUser={setUser}></NavBar>

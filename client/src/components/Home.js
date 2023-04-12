@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from './Post'
-import {VStack, Img} from '@chakra-ui/react'
-
+import { Grid } from "@mui/material";
 
 function Home({user}) {
     const [posts, setPosts] = useState([]);
@@ -20,14 +19,14 @@ function Home({user}) {
         });
         }, [])
 
-    console.log(posts)
-
     const postsCard = posts.map(post => <Post key={post.id} post={post} setPosts={setPosts} user={user}/>)
 
     return (
-        <VStack>
-            <ul>{postsCard}</ul>
-        </VStack>
+        <Grid container spacing={3} justifyContent='center'>
+					<Grid item xs={4} md={8}>
+						{postsCard} 
+					</Grid>
+				</Grid>
     )
 }
 
