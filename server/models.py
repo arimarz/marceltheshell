@@ -21,7 +21,7 @@ class User(db.Model, SerializerMixin):
     posts = db.relationship('Post', backref='user')
     likes = db.relationship('Like', backref='user')
     comments = db.relationship('Comment', backref='user')
-    serialize_rules = ('-posts', '-likes', '-comments')
+    serialize_rules = ('-posts', '-likes', '-comments', '-_password_hash' )
 
     @hybrid_property
     def password_hash(self):
