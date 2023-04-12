@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Post from './Post'
 import {VStack, Img} from '@chakra-ui/react'
 
+
 function Home({user}) {
     const [posts, setPosts] = useState([]);
 
