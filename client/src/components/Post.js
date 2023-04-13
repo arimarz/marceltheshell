@@ -16,6 +16,7 @@ import Collapse from '@mui/material/Collapse';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
+import EditComment from './EditComment.js';
 
 
 const useStyles = makeStyles({
@@ -46,63 +47,24 @@ const ExpandMore = styled((props) => {
         if (!userGrab.user) return 'Loading'
         const { username, avatar, id } = userGrab.user
         const { image, quote, original, user_id, created_at } = post;
-        console.log(post)
+
         const handleExpandClick = () => {
             setExpanded(!expanded);
             setShowAllComments(!showAllComments);
         };
-
-        const handleCommentEdit = (comment.id, newComment) => {
-            fetch(`/comments/${comment.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ comment: newComment }),
-            })
-            .then((res) => {
-                if (res.ok) {
-                setPosts((posts) => {
-                    return posts.map((onePost) => {
-                    if (onePost.id === post.id) {
-                        const updatedComments = onePost.comments.map((comment) => {
-                        if (comment.id === commentId) {
-                            return { ...comment, comment: newComment };
-                        } else {
-                            return comment;
-                        }
-                        });
-                        return { ...onePost, comments: updatedComments };
-                    } else {
-                        return onePost;
-                    }
-                    });
-                });
-                } else {
-                console.log(res.statusText);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        };
-    
         const commentItems = showAllComments
             ? post.comments.map((comment) => (
-                <Box display="flex" key={comment.id}>
-                    <Avatar src={comment.user.avatar} />
-                    <Box>
-                        <Text fontWeight="bold">{comment.user.username}</Text>
-                        <Text> {id === comment.user.id ? <><EditIcon onClick={handleCommentEdit} />
-                        <DeleteOutlineIcon/> </>: null} {comment.comment}</Text>
-                        
-                    </Box>
-                </Box>
+                <EditComment
+                key= {comment.id}
+                comment={comment}
+                post={post}
+                setPosts={setPosts}/>
             ))
             : null;
     
     
         const handleLikeClick = () => {
             // Check if the user has already liked this post
-    
             if (post.is_liked) {
                 // User has already liked the post, removes like
                 fetch(`/posts/${post.id}/likes/${id}`, { method: 'DELETE' })
@@ -141,35 +103,6 @@ const ExpandMore = styled((props) => {
             setCommentValue(event.target.value);
         };
 
-        const handleCommentDelete = (commentId) => {
-            fetch(`/comments/${commentId}`, {
-                method: 'DELETE',
-                })
-                .then((res) => {
-                    if (res.ok) {
-                    setPosts((posts) => {
-                        return posts.map((onePost) => {
-                        if (onePost.id === post.id) {
-                            const updatedComments = onePost.comments.filter(
-                            (comment) => comment.id !== commentId
-                            );
-                            return { ...onePost, comments: updatedComments };
-                        } else {
-                            return onePost;
-                        }
-                        });
-                    });
-                    } else {
-                    console.log(res.statusText);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-            };
-            
-            
-            
             const handleCommentSubmit = (e) => {
                 e.preventDefault();
                 fetch(`/posts/${post.id}/comments`, {
@@ -250,27 +183,3 @@ const ExpandMore = styled((props) => {
 }
 
 export default Post;
-
-{/* // <HStack spacing="24px">
-        // <Box>
-        //     <img src={image} alt="Image Post" />
-        //     <h3>{quote}</h3>
-        //     <p>{original}</p>
-        // </Box>
-        // <Box>
-        //     <Img
-        //     aria-label="like"
-        //     src={post.is_liked ? {liked} : {unliked} }
-        //     onClick={handleLikeClick}
-        //     />
-        //     <p>Likes: {post.liked_amount}</p>
-        //     <Box>
-        //     {commentItems}
-        //     {post.comments.length > 5 && (
-        //     <Button onClick={() => setShowAllComments(!showAllComments)}>
-        //         {showAllComments ? "Hide comments" : "Show all comments"}
-        //     </Button>
-        //     )}
-        // </Box>
-        // </Box>
-        // </HStack> */}
