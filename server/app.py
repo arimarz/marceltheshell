@@ -186,6 +186,45 @@ class Logout(Resource):
         return response
 api.add_resource(Logout, '/logout')
 
+class Comments(Resource):
+    def post(self, post_id):
+        data = request.get_json()
+        comment = Comment(
+            comment=data["comment"],
+            user_id=session['user_id'],
+            post_id=post_id
+        ) 
+
+        db.session.add(comment)
+        db.session.commit()
+
+        response = make_response(
+            comment.to_dict(),
+            201
+        )
+        return response
+
+    def patch(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            return make_response({'error': 'Comment not found'}, 404)
+        data = request.get_json()
+        comment.comment = data['comment']
+        db.session.commit()
+
+        return make_response(comment.to_dict(), 202)
+
+    def delete(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            return make_response({"error": "Comment not found"}, 404)
+        db.session.delete(comment)
+        db.session.commit()
+
+        return make_response('', 204)
+
+api.add_resource(Comments, '/posts/<int:post_id>/comments', '/comments/<int:id>')
+
 
 if __name__ == "__main__":
     app.run(port="5555", debug=True)
