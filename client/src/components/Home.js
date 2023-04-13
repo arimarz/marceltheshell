@@ -23,7 +23,7 @@ function Home({user}) {
 
     return (
         <Grid container spacing={3} justifyContent='center'>
-					<Grid item xs={4} md={8}>
+					<Grid item xs={3} md={8}>
 						{postsCard} 
 					</Grid>
 				</Grid>

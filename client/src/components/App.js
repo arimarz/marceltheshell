@@ -8,7 +8,7 @@ import Home from './Home.js';
 import Login from './Login.js';
 import Profile from './Profile.js';
 import NavBar from './NavBar.js';
-// import NewPost from './NewPost.js';
+import NewPost from './NewPost.js';
 // import Posts from './Posts.js';
 // import EditPost from './EditPost.js';
 // import PostsList from './PostsList.js';
@@ -69,6 +69,9 @@ function App() {
                         </Route>
                         <Route path="/profile/:id" exact>
                             <Profile/>
+                        </Route>
+                        <Route path="/post/create" exact>
+                            <NewPost/>
                         </Route>
                     </Switch>  
                 </Box>

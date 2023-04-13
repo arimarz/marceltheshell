@@ -75,7 +75,7 @@ function NavBar() {
                 </Link>
                 </ListItem>
                 <ListItem key='Create' disablePadding>
-                <Link component={NavLink} exact to={`/post`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link component={NavLink} exact to={`/post/create`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <ListItemButton>
                     <ListItemIcon>
                     <AddCircleOutlineIcon style={{ color: '#e66288'}} sx={{width: '40px', height: '40px'}}/>
