@@ -94,6 +94,9 @@ class PostByID(Resource):
 
 api.add_resource(PostByID, '/posts/<int:id>')
 
+
+
+
 class Likes(Resource):
     def get(self, post_id):
         likes = Like.query.filter_by(post_id=post_id).all()
