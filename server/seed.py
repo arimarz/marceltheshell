@@ -2,9 +2,9 @@ from random import random, randint, choice as rc
 from app import app
 from models import db, User, Post, Comment, Like
 from datetime import datetime
-
 # User, Post, Like, Comment
 
+video = './videos/'
 
 print('creating users')
 users_list = [
@@ -47,28 +47,27 @@ print('users committed')
 # post data
 print('creating posts')
 posts_list = [
-    {"quote": "Guess why I smile? Uh, because it's worth it", "original": True, "user_id": 1, "image": "https://64.media.tumblr.com/tumblr_lzcsx7e42X1r6s6i5o1_500.gif"},
-    {"quote": "I'm the smallest", "original": True, "user_id": 2, "image": "https://media.giphy.com/media/FqDvV8Wp5e5mH7Gc2C/giphy.gif"},
-    {"quote": "I have shoes, they are pine needles.", "original": True, "user_id": 3, "image": "https://media.giphy.com/media/w6uwxA9SbdyaM/giphy.gif"},
-    {"quote": "My one true regret is that I'll never have a dog. But sometimes I tie a hair to a piece of lint and I drag it around.", "original": True, "user_id": 4, "image": "https://media.giphy.com/media/Hm8JhBfNBKjOw/giphy.gif"},
-    {"quote": "I don't always do a lot, but what I do, I do well - namely, breathing and being tiny.", "original": True, "user_id": 5, "image": "https://media.giphy.com/media/Ma7VjFgHdJ7YY/giphy.gif"},
-    {"quote": "I can't tell time, but I know it's time for lunch.", "original": True, "user_id": 6, "image": "https://media.giphy.com/media/l2QZVMsBNbRUrTBJG/giphy.gif"},
-    {"quote": "It's a heavy burden being such a tiny being.", "original": True, "user_id": 7, "image": "https://media.giphy.com/media/tKjEEXG8WtS4M/giphy.gif"},
-    {"quote": "Sometimes on a Sunday I think I'm alone, but I'm really not alone. I have the bird.", "original": True, "user_id": 8, "image": "https://media.giphy.com/media/BLpJ3aqgVccOk/giphy.gif"},
-    {"quote": "What is a skateboard? Oh, is it food?", "original": False, "user_id": 9, "image": "https://media.giphy.com/media/1MFgcjGrcFZ9POpeLD/giphy.gif"},
-    {"quote": "I'm allergic to hazelnuts, but that doesn't stop me from loving Nutella.", "original": False, "user_id": 10, "image": "https://media.giphy.com/media/8pKerJZ9oFsoE/giphy.gif"},
-    {"quote": "I've always wanted to be an astronaut, but I don't think they make spacesuits in my size.", "original": True, "user_id": 3, "image": "https://media.giphy.com/media/w0myG9zCJdBOs/giphy.gif"},
-    {"quote": "I love the smell of fresh cut grass. It reminds me of when I was a blade of grass.", "original": False, "user_id": 2, "image": "https://media.giphy.com/media/Zv4A9tzLEiMCs/giphy.gif"},
-    {"quote": "I can only see out of one eye because the other one is lazy", "original": True, "user_id": 1, "image": "https://media.giphy.com/media/9P4Hls4e0V7wU/giphy.gif"},
-    {"quote": "I'm as happy as a clam, because I am a clam", "original": True, "user_id": 2, "image": "https://media.giphy.com/media/3o6ZtpGFEPL8A6UO7K/giphy.gif"},
-    {"quote": "I'm like a seashell, but much, much louder", "original": True, "user_id": 3, "image": "https://media.giphy.com/media/12tj1fKHg9Xh8M/giphy.gif"},
-    {"quote": "I'm so talented, I can play dead", "original": True, "user_id": 4, "image": "https://media.giphy.com/media/pbUEWlCvSTvLm/giphy.gif"},
-    {"quote": "I'm a pretty busy guy. I've got a sentence to finish", "original": True, "user_id": 5, "image": "https://media.giphy.com/media/xUPGciJzdvg58xg1JW/giphy.gif"},
-    {"quote": "I love doing impressions. Here's my impression of a thumb", "original": True, "user_id": 6, "image": "https://media.giphy.com/media/l4FGsV4pAKcMwCMPC/giphy.gif"},
-    {"quote": "I don't mean to brag, but I just bought a house with a pool", "original": False, "user_id": 7, "image": "https://media.giphy.com/media/l2SpQefwpfU6C5UqM/giphy.gif"},
-    {"quote": "I'm not just a shell. I'm a seashell", "original": True, "user_id": 8, "image": "https://media.giphy.com/media/gEJ1wVrZzGIuM/giphy.gif"},
-    {"quote": "I'm an excellent walker. One of my best qualities", "original": True, "user_id": 9, "image": "https://media.giphy.com/media/l49JXJFvR3qHapwpy/giphy.gif"},
-    {"quote": "My friends are like stars. They're always there, even when you can't see them", "original": False, "user_id": 10, "image": "https://media.giphy.com/media/xUOwFZr7kUXZzjtDkM/giphy.gif"}
+    {"quote": "Sometimes people say that my head is too big for my body and then I say 'Compared to what!' ", "original": True, "user_id": 4, "image": './videos/compared_to_what.mp4'},
+    {"quote": "Guess why I smile a lot? Uh, because it's worth it", "original": True, "user_id": 1, "image": "./videos/guess_why_i_smile.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 2, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what my bed is... a piece of bread.", "original": True, "user_id": 3, "image": "./videos/breadroom.mp4"},
+    {"quote": "If you do drive a bug, you have to be pretty easy-going because you're only going to get to go where the bug wants to go", "original": True, "user_id": 4, "image": "./videos/drive_a_bug.mp4"},
+    {"quote": "My name is Marcel...I have a lot of other great qualities as well", "original": True, "user_id": 5, "image": "./videos/i_like_that_about_myself.mp4"},
+    {"quote": "Guess what my skis are.", "original": True, "user_id": 6, "image": "./videos/skis.mp4"},
+    {"quote": "Windy.. thats your nickname", "original": True, "user_id": 7, "image": "./videos/windy.mp4"},
+    {"quote": "All he cares about is treats, treats and snoozin'", "original": True, "user_id": 8, "image": "./videos/treats_and_snoozin.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 2, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 3, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 7, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 11, "image": "./videos/guesswhatIwhereasaHat.mp4"}, 
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 10, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 9, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 8, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 7, "image": "./videos/guesswhatIwhereasaHat.mp4"}, 
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 6, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 12, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 4, "image": "./videos/guesswhatIwhereasaHat.mp4"},
+    {"quote": "Guess what I wear as a hat... A lentil", "original": True, "user_id": 13, "image": "./videos/guesswhatIwhereasaHat.mp4"}
     ]
 print('posts created')
 
@@ -145,7 +144,7 @@ comments_random = [
 ]
 for i in range(100):
     user_id = randint(1, 13)
-    post_id = randint(1, 22)
+    post_id = randint(1, 21)
     comment = rc(comments_random)
     comments_list.append({'user_id': user_id, 'post_id': post_id, 'comment': comment})
 print('comments created')

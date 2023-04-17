@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import EditComment from './EditComment.js';
+import Video from './Video.js';
 
 
 const useStyles = makeStyles({
@@ -134,7 +135,7 @@ const ExpandMore = styled((props) => {
                     console.log(err);
                 });
             };
-            
+            console.log(image)
             return (
                 <Card>
                 <CardHeader
@@ -142,7 +143,7 @@ const ExpandMore = styled((props) => {
                     title={quote}
                     subheader={new Date(created_at).toDateString()}
                 />
-                <CardMedia image={image} className={media} />
+                <Video image={image}/>
                 <CardActions disableSpacing>
                     <IconButton onClick={handleLikeClick}>
                     <span style={{ display: 'flex', alignItems: 'center' }}>
