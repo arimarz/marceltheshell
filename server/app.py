@@ -29,7 +29,12 @@ api.add_resource(UserByID, '/users/<int:id>')
 
 class Posts(Resource):
     def get(self):
-        posts = [post.to_dict(rules= ('is_liked', 'liked_amount', 'comments', '-likes.post_id', '-likes.user_id', '-comments.post_id', '-comments.user_id')) for post in Post.query.all()]
+        page = request.args.get('page', 1, type=int)
+        per_page = 5
+        start = (page - 1) * per_page
+        end = start + per_page
+        
+        posts = [post.to_dict(rules= ('is_liked', 'liked_amount', 'comments', '-likes.post_id', '-likes.user_id', '-comments.post_id', '-comments.user_id')) for post in Post.query.order_by(Post.created_at.desc()).slice(start, end)]
         response = make_response(
             posts,
             200
