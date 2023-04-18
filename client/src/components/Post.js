@@ -18,6 +18,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import EditComment from './EditComment.js';
 import Video from './Video.js';
+import { Typography } from '@mui/material';
 
 
 const useStyles = makeStyles({
@@ -39,7 +40,7 @@ const ExpandMore = styled((props) => {
     }));
     
 
-    function Post({ post, setPosts }) {
+    function Post({ post, setPosts}) {
         const userGrab = useContext(UserContext)
         const [commentValue, setCommentValue] = useState("");
         const { media } = useStyles()
@@ -135,52 +136,68 @@ const ExpandMore = styled((props) => {
                     console.log(err);
                 });
             };
-            console.log(image)
+            
+            const randomDate = () => {
+                const currentDate = new Date();
+                const startYear = currentDate.getFullYear() - 10;
+                const endYear = currentDate.getFullYear();
+                const start = new Date(startYear, 0, 1);
+                const end = new Date(endYear, 11, 31);
+                return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+            };
             return (
-                <Card>
-                <CardHeader
-                    avatar={<Avatar src={post.user.avatar} />}
-                    title={quote}
-                    subheader={new Date(created_at).toDateString()}
-                />
-                <Video image={image}/>
-                <CardActions disableSpacing>
-                    <IconButton onClick={handleLikeClick}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}>
-                        <Img
-                        aria-label="like"
-                        src={post.is_liked ? liked : unliked}
-                        style={{ width: 60 }}
-                        />
-                        <span style={{ marginLeft: '8px' }}>{post.liked_amount}</span>
-                    </span>
-                    </IconButton>
-                    <ChatBubbleOutlineRoundedIcon/>
-                    <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                    >
-                    <ExpandMoreIcon />
-                    </ExpandMore>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        {commentItems}
-                        <form onSubmit={handleCommentSubmit}>
-                        <input
-                            type="text"
-                            placeholder="Add a comment"
-                            value={commentValue}
-                            onChange={handleCommentChange}
+                <Card style={{ marginBottom: "30px" }}>
+                    <CardHeader
+                        style={{ fontSize: '5rem' }} 
+                        avatar={<Avatar src={post.user.avatar} style={{ width: 70, height: 70 }} />} 
+                        title={
+                            <span style={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.5rem' }}>{quote}</span> 
+                        }
+                        subheader={
+                            <span style={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.25rem' }}>
+                                {randomDate().toDateString()}
+                            </span> // Set the desired font for the subheader
+                        }
                     />
-                    <button type="submit">Post</button>
-                    </form>
-                </CardContent>
-                </Collapse>
-        </Card>
-        );
+                    <Box display="flex" justifyContent="center">
+                        <Video image={image} />
+                    </Box>
+                    <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <IconButton onClick={handleLikeClick} style={{ fontSize: '3.5rem' }}>
+                            <span style={{ display: 'flex', alignItems: 'center' }}>
+                                <Img
+                                    aria-label="like"
+                                    src={post.is_liked ? liked : unliked}
+                                    style={{ width: 100 }}
+                                />
+                                <span style={{ marginLeft: '8px' }}>{post.liked_amount}</span>
+                            </span>
+                        </IconButton>
+                        <ExpandMore
+                            expand={expanded}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                        >
+                            <ExpandMoreIcon style={{ fontSize: '4rem' }}/>
+                        </ExpandMore>
+                    </CardActions>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            {commentItems}
+                            <form onSubmit={handleCommentSubmit}>
+                                <input
+                                    type="text"
+                                    placeholder="Add a comment"
+                                    value={commentValue}
+                                    onChange={handleCommentChange}
+                                />
+                                <button type="submit">Post</button>
+                            </form>
+                        </CardContent>
+                    </Collapse>
+                </Card>
+            );
 }
 
 export default Post;
