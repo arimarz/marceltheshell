@@ -21,10 +21,15 @@ const useStyles = makeStyles((theme) => ({
     }));
 
     function EditComment({ comment, setPosts, post }) {
-    const { id } = useContext(UserContext).user;
+        const userContext = useContext(UserContext);
+        const { id } = userContext.user || {};
     const classes = useStyles();
     const [isEditing, setIsEditing] = useState(false);
     const [updatedComment, setUpdatedComment] = useState(comment.comment);
+
+    if (!userContext.user || !comment.user) {
+        return null;
+    }
 
     const handleCommentEdit = () => {
         fetch(`/comments/${comment.id}`, {
@@ -78,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
                 }
                 });
             });
+            setUpdatedComment('');
+            setIsEditing(false);
             } else {
             throw new Error('Failed to delete comment');
             }
@@ -89,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 
     return (
         <Box className={classes.root}>
-            <Avatar src={comment.user.avatar} className={classes.avatar} />
+            <Avatar src={comment.user.avatar} />
             <Box className={classes.comment}>
                 <Typography variant="subtitle1" fontWeight="bold">
                 {comment.user.username}
@@ -100,8 +107,6 @@ const useStyles = makeStyles((theme) => ({
                     value={updatedComment}
                     onChange={(e) => {
                         setUpdatedComment(e.target.value);
-                        // set the updated comment immediately
-                        comment.comment = e.target.value;
                     }}
                     rows={1}
                     fullWidth

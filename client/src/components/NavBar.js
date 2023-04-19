@@ -15,25 +15,17 @@ import {useContext} from 'react';
 import home from '../pictures/home_shell.png'
 import {Avatar, Link} from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 function NavBar() {
     const userGrab = useContext(UserContext)
     const history = useHistory();
-    if (!userGrab.user) {
-        return (
-        <Link
-            component={NavLink}
-            exact
-            to="/login"
-            activeStyle={{ color: '#d09aa4' }}
-            underline="none"
-            >
-            Login
-            </Link>
-        );
+    const location = useLocation();
+    if (!userGrab.user || location.pathname === '/login') {
+        return null
     }
         const {username, avatar, id} = userGrab.user
     const handleLogout = () => {
@@ -89,7 +81,11 @@ function NavBar() {
                     <ListItemIcon>
                     <AddCircleOutlineIcon style={{ color: '#e66288'}} sx={{width: '40px', height: '40px'}}/>
                     </ListItemIcon>
-                    <ListItemText primary='Create' primaryTypographyProps={{ fontSize: '24px' }}/>
+                    <ListItemText primary='Create' primaryTypographyProps={{ fontSize: '24px' }} sx={{
+                            '& .MuiTypography-root': {
+                            fontFamily: 'FirstTimeWriting!, Arial, sans-serif',
+                            },
+                        }}/>
                     </ListItemButton>
                 </Link>
                 </ListItem>
