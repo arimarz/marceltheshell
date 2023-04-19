@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 
 const Video = ({ image }) => {
-    console.log(image)
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
