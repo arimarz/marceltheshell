@@ -8,6 +8,7 @@ import FirstTimeWriting from '../fonts/firsttime.ttf';
 import Kinder from '../fonts/Kindergarten.ttf';
 import Arsenale from '../fonts/Arsenale-White-trial.ttf'
 import loading from '../pictures/Marcel_loading.png'
+import login from '../pictures/loginBackground.jpg'
 
 import Home from './Home.js';
 import Login from './Login.js';
@@ -78,7 +79,9 @@ function App() {
                 setUser(null)
             }
             setUserFetched(true);
-            setIsLoading(false);
+            setTimeout(()=> {
+                setIsLoading(false);
+            }, 2000)
         })
         )
         
@@ -89,19 +92,18 @@ function App() {
                 <Avatar src={loading} alt="Loading" sx={{ width: '150px', height: '150px' }}/>
                 </div>
                 ) : (
-                    <Box bg='#747c74' display="grid" gridTemplateColumns="270px 1fr" minHeight="100vh">
+                    <Box bg='#747c74' display="grid" gridTemplateColumns="270px 1fr" minHeight="100vh"
+                    sx={{
+                        backgroundImage: location.pathname === "/login" ? login : '',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}>
                         <NavBar />
-                        <Box minHeight='100vh'>
+                        <Box flexGrow={1} sx ={{gridColumn: 2}}>
                             <Box>
                                 {location.pathname !== "/login" && <Header />}
                             </Box>
-                            <Box flexGrow={1}
-                                sx={{
-                                    backgroundImage: location.pathname === "/login" ? "url('https://ca-times.brightspotcdn.com/dims4/default/862760b/2147483647/strip/true/crop/2798x1800+0+0/resize/1200x772!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe8%2Fae%2Fcc66c9a140d69470e3346945287f%2Fenv-marcel-the-shell-family.jpg')" : '',
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    backgroundPosition: 'center'
-                                }}>
+                            <Box >
                                 <Switch>
                                     <Route path="/" exact>
                                         <Home />
