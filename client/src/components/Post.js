@@ -135,7 +135,7 @@ const ExpandMore = styled((props) => {
                             </Typography>
                         }
                         subheader={
-                            <Typography variant="h5" fontWeight="bold">
+                            <Typography variant="h5" fontWeight="bold" sx={{ color: '#7c7473' }}>
                                 {new Date(post.created_at).toDateString()}
                             </Typography>
                         }

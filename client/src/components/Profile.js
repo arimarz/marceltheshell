@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from 'react-router-dom';
 import Video from './Video';
-import { Grid, Avatar, Card, CardHeader } from "@mui/material";
+import { Grid, Avatar, Card, CardHeader, Typography } from "@mui/material";
 import { Box } from '@chakra-ui/react'
 import UserContext from './UserContext';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -77,23 +77,20 @@ function Profile({user}) {
     const postsToDisplay = posts?.map((post, index) => {
         console.log(post.image)
         return (
-        <Card sx={{backgroundColor: '#645c5c', marginBottom: '30px',}}>
+        <Card sx={{backgroundColor: '#b4b4ac', marginBottom: '30px',}}>
                     <CardHeader
                         sx={{ fontSize: '5rem' }} 
-                        avatar={<Avatar src={avatar} sx={{ width: 70, height: 70 }} />} 
+                        avatar={<Avatar src={avatar} sx={{ width: 70, height: 70, borderRadius: '50%', border: '3px solid #544a2a' }} />} 
                         title={
-                            <span sx={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.5rem' }}>{post.quote}</span> 
+                            <Typography variant="h4" fontWeight="bold">
+                                {post.quote}
+                            </Typography>
                         }
-                        // subheader={
-                        //     <span sx={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.25rem' }}>
-                        //         {randomDate().toDateString()}
-                        //     </span> // Set Date later
-                        // }
+                        action={ <DeleteIcon sx={{ fontSize: '3rem', color: '#645c5c' }}/> }
                     />
                     <Box display="flex" justifyContent="center">
                         <Video image={`/${post.image}`} />
                     </Box>
-                    <DeleteIcon/>
                 </Card>
         )});
 
@@ -111,8 +108,8 @@ function Profile({user}) {
                 >
                 <Avatar src={avatar} sx={{ width: 200, height: 200, marginRight: "20px" }} />
                 <Box display="flex" flexDirection="column">
-                    <h3>Name: {name}</h3>
-                    <h3>User: {username}</h3>
+                    <h1>Name: {name}</h1>
+                    <h1>User: {username}</h1>
                     {thisUser ? (
                     <button onClick={handleClickEdit}>
                         {editMode ? "Close Editor Without Saving" : "Edit Profile"}
@@ -153,12 +150,18 @@ function Profile({user}) {
                 </Box>
                 </Box>
             <div>
-                <h3>Posts:</h3>
+            <Grid container justifyContent="center">
+                <Grid item xs={12} md={8}>
+                <Typography variant="h3" align="center">
+                    Posts:
+                </Typography>
                 <Grid container spacing={3} justifyContent="center">
                     <Grid item xs={3} md={8}>
-                <ul >{postsToDisplay}</ul>
+                    <ul>{postsToDisplay}</ul>
+                    </Grid>
                 </Grid>
                 </Grid>
+            </Grid>
             </div> 
         </div>
     );
