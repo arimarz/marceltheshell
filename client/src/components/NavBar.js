@@ -14,6 +14,7 @@ import UserContext from './UserContext';
 import {useContext} from 'react';
 import home from '../pictures/home_shell.png'
 import home2 from '../pictures/homeButton.png'
+import home3 from '../pictures/homeShell.png'
 import {Avatar, Link} from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -38,7 +39,7 @@ function NavBar() {
             };
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex'}}>
             <CssBaseline />
             <Drawer
                 sx={{
@@ -49,19 +50,22 @@ function NavBar() {
                         boxSizing: 'border-box',
                         backgroundColor:'#ceb9c4',
                         boxShadow: '0 10px 10px rgba(0, 0, 0, 0.1)',
+                        overflow: 'hidden',
                     },
                 }}
                 variant="permanent"
                 anchor="left"
             >
                 <Toolbar />
-                <List sx={{ '& .MuiListItem-root': { marginBottom: '150px' },
-                        color: '#522f1a' }}>
+                <List sx={{ '& .MuiListItem-root': { marginBottom: '125px' }, color: '#522f1a' }}>
+                        <ListItem key='Title' disablePadding sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                            <ListItemText primary="Marcel's Shell" primaryTypographyProps={{ fontSize: '70px', textAlign: 'center' }} />
+                        </ListItem>
                     <ListItem key='Home' disablePadding>
                         <Link component={NavLink} exact to="/" sx={{ textDecoration: 'none', color: 'inherit' }}>
                             <ListItemButton>
                                 <ListItemIcon sx={{ paddingRight: '16px' }}>
-                                    <Avatar src={home2} sx={{width: '70px', height: '70px'}}/>
+                                    <Avatar src={home3} sx={{width: '70px', height: '70px'}}/>
                                 </ListItemIcon>
                                 <ListItemText primary='Home' primaryTypographyProps={{ fontSize: '60px' }}/>
                             </ListItemButton>

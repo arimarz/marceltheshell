@@ -3,9 +3,11 @@ import UserContext from './UserContext';
 import { BrowserRouter, Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { Flex, Box } from "@chakra-ui/react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {Avatar} from '@mui/material'
 import FirstTimeWriting from '../fonts/firsttime.ttf'; 
 import Kinder from '../fonts/Kindergarten.ttf';
 import Arsenale from '../fonts/Arsenale-White-trial.ttf'
+import loading from '../pictures/Marcel_loading.png'
 
 import Home from './Home.js';
 import Login from './Login.js';
@@ -57,6 +59,7 @@ function App() {
     const history = useHistory();
     const location = useLocation();
     const [userFetched, setUserFetched] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetchUser()
@@ -75,43 +78,51 @@ function App() {
                 setUser(null)
             }
             setUserFetched(true);
+            setIsLoading(false);
         })
         )
         
         return (
             <UserContext.Provider value={{ user, setUser }}>
-                <Box bg='#747c74' display="grid" gridTemplateColumns="270px 1fr" minHeight="100vh">
-                    <NavBar />
-                    <Box minHeight='100vh'>
-                        <Box>
-                            {location.pathname !== "/login" && <Header />}
+                {isLoading ? (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <Avatar src={loading} alt="Loading" sx={{ width: '150px', height: '150px' }}/>
+                </div>
+                ) : (
+                    <Box bg='#747c74' display="grid" gridTemplateColumns="270px 1fr" minHeight="100vh">
+                        <NavBar />
+                        <Box minHeight='100vh'>
+                            <Box>
+                                {location.pathname !== "/login" && <Header />}
+                            </Box>
+                            <Box flexGrow={1}
+                                sx={{
+                                    backgroundImage: location.pathname === "/login" ? "url('https://ca-times.brightspotcdn.com/dims4/default/862760b/2147483647/strip/true/crop/2798x1800+0+0/resize/1200x772!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe8%2Fae%2Fcc66c9a140d69470e3346945287f%2Fenv-marcel-the-shell-family.jpg')" : '',
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundPosition: 'center'
+                                }}>
+                                <Switch>
+                                    <Route path="/" exact>
+                                        <Home />
+                                    </Route>
+                                    <Route exact path="/login">
+                                        <Login />
+                                    </Route>
+                                    <Route path="/profile/:id" exact>
+                                        <Profile />
+                                    </Route>
+                                    <Route path="/post/create" exact>
+                                        <NewPost />
+                                    </Route>
+                                </Switch>
+                            </Box>
                         </Box>
-                        <Box flexGrow={1}
-                            sx={{
-                                backgroundImage: location.pathname === "/login" ? "url('https://ca-times.brightspotcdn.com/dims4/default/862760b/2147483647/strip/true/crop/2798x1800+0+0/resize/1200x772!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe8%2Fae%2Fcc66c9a140d69470e3346945287f%2Fenv-marcel-the-shell-family.jpg')" : '',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center'
-                            }}>
-                            <Switch>
-                                <Route path="/" exact>
-                                    <Home />
-                                </Route>
-                                <Route exact path="/login">
-                                    <Login />
-                                </Route>
-                                <Route path="/profile/:id" exact>
-                                    <Profile />
-                                </Route>
-                                <Route path="/post/create" exact>
-                                    <NewPost />
-                                </Route>
-                            </Switch>
-                        </Box>
-                        </Box>
-                </Box>
-                </UserContext.Provider>
-            );
-}
+                    </Box>
+                )}
+            </UserContext.Provider>
+        );
+    }
 
 function WrappedApp() {
         return (
