@@ -13,6 +13,7 @@ import { NavLink } from "react-router-dom";
 import UserContext from './UserContext';
 import {useContext} from 'react';
 import home from '../pictures/home_shell.png'
+import home2 from '../pictures/homeButton.png'
 import {Avatar, Link} from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -35,72 +36,60 @@ function NavBar() {
                 })
                 .catch(error => console.error('Error logging out:', error));
             };
-            
+
     return (
         <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <Drawer
-            sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-                backgroundColor:'#7f7c5b'
-            },
-            }}
-            variant="permanent"
-            anchor="left"
-        >
-            <Toolbar />
-            <List sx={{ '& .MuiListItem-root': { marginBottom: '60px' },
-                    color: '#e66288' }}>
-            <ListItem key='Home' disablePadding>
-                <Link component={NavLink} exact to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <ListItemButton>
-                    <ListItemIcon>
-                        <Avatar src={home} sx={{width: '40px', height: '40px'}}/>
-                    </ListItemIcon>
-                    <ListItemText primary='Home' primaryTypographyProps={{ fontSize: '24px' }}/>
-                    </ListItemButton>
-                </Link>
-                </ListItem>
-                <ListItem key='Profile' disablePadding>
-                <Link component={NavLink} exact to={`/profile/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <ListItemButton>
-                    <ListItemIcon>
-                        <Avatar src={avatar} sx={{width: '40px', height: '40px'}}/>
-                    </ListItemIcon>
-                    <ListItemText primary={username} primaryTypographyProps={{ fontSize: '24px' }}/>
-                    </ListItemButton>
-                </Link>
-                </ListItem>
-                <ListItem key='Create' disablePadding>
-                <Link component={NavLink} exact to={`/post/create`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <ListItemButton>
-                    <ListItemIcon>
-                    <AddCircleOutlineIcon style={{ color: '#e66288'}} sx={{width: '40px', height: '40px'}}/>
-                    </ListItemIcon>
-                    <ListItemText primary='Create' primaryTypographyProps={{ fontSize: '24px' }} sx={{
-                            '& .MuiTypography-root': {
-                            fontFamily: 'FirstTimeWriting!, Arial, sans-serif',
-                            },
-                        }}/>
-                    </ListItemButton>
-                </Link>
-                </ListItem>
-            <ListItem key='Logout' disablePadding>
-            <Link component={NavLink} exact to={`/logout`} onClick={handleLogout} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <ListItemButton>
-                    <ListItemIcon>
-                    <LogoutIcon style={{ color: '#e66288'}} sx={{width: '40px', height: '40px'}}/>
-                    </ListItemIcon>
-                    <ListItemText primary='Logout' primaryTypographyProps={{ fontSize: '24px' }}/>
-                </ListItemButton>
-                </Link>
-                </ListItem>
-            </List>
-        </Drawer>
+            <CssBaseline />
+            <Drawer
+                sx={{
+                    width: drawerWidth,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: drawerWidth,
+                        boxSizing: 'border-box',
+                        backgroundColor:'#ceb9c4',
+                        boxShadow: '0 10px 10px rgba(0, 0, 0, 0.1)',
+                    },
+                }}
+                variant="permanent"
+                anchor="left"
+            >
+                <Toolbar />
+                <List sx={{ '& .MuiListItem-root': { marginBottom: '150px' },
+                        color: '#522f1a' }}>
+                    <ListItem key='Home' disablePadding>
+                        <Link component={NavLink} exact to="/" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            <ListItemButton>
+                                <ListItemIcon sx={{ paddingRight: '16px' }}>
+                                    <Avatar src={home2} sx={{width: '70px', height: '70px'}}/>
+                                </ListItemIcon>
+                                <ListItemText primary='Home' primaryTypographyProps={{ fontSize: '60px' }}/>
+                            </ListItemButton>
+                        </Link>
+                    </ListItem>
+                    <ListItem key='Profile' disablePadding>
+                        <Link component={NavLink} exact to={`/profile/${id}`} sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            <ListItemButton>
+                                <ListItemIcon sx={{ paddingRight: '16px' }}>
+                                    <Avatar src={avatar} sx={{width: '70px', height: '70px', borderRadius: '50%',
+                                        border: '3px solid #522f1a'}} />
+                                </ListItemIcon>
+                                <ListItemText primary={username} primaryTypographyProps={{ fontSize: '50px' }}/>
+                            </ListItemButton>
+                        </Link>
+                    </ListItem>
+                    <ListItem key='Logout' disablePadding>
+                    <Link component={NavLink} exact to={`/logout`} onClick={handleLogout} sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <LogoutIcon style={{ color: '#522f1a'}} sx={{width: '70px', height: '70px'}}/>
+                                </ListItemIcon>
+                                <ListItemText primary='Logout' sx={{ fontFamily: 'Kinder', fontWeight: 'bold' }} primaryTypographyProps={{ fontSize: '60px' }}/>
+                            </ListItemButton>
+                        </Link>
+                    </ListItem>
+                </List>
+            </Drawer>
             <Toolbar />
         </Box>
     );

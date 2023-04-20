@@ -1,29 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Box, Typography, Input, Button, IconButton, Avatar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { Edit as EditIcon, DeleteOutline as DeleteOutlineIcon } from '@mui/icons-material';
 import UserContext from './UserContext';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        marginBottom: theme.spacing(2),
-    },
-    avatar: {
-        marginRight: theme.spacing(2),
-    },
-    comment: {
-        flexGrow: 1,
-    },
-    button: {
-        marginLeft: theme.spacing(1),
-    },
-    }));
-
-    function EditComment({ comment, setPosts, post }) {
-        const userContext = useContext(UserContext);
-        const { id } = userContext.user || {};
-    const classes = useStyles();
+function EditComment({ comment, setPosts, post }) {
+    const userContext = useContext(UserContext);
+    const { id } = userContext.user || {};
     const [isEditing, setIsEditing] = useState(false);
     const [updatedComment, setUpdatedComment] = useState(comment.comment);
 
@@ -95,10 +77,10 @@ const useStyles = makeStyles((theme) => ({
     };
 
     return (
-        <Box className={classes.root}>
-            <Avatar src={comment.user.avatar} />
-            <Box className={classes.comment}>
-                <Typography variant="subtitle1" fontWeight="bold">
+        <Box sx={{ display: 'flex', marginBottom: 2 }}>
+            <Avatar src={comment.user.avatar} sx={{ marginRight: 1.5, width: 60, height: 60, borderRadius: '50%', border: '3px solid #544a2a' }}/>
+            <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="h4" component='span' fontWeight="bold" >
                 {comment.user.username}
                 </Typography>
                 {isEditing ? (
@@ -110,19 +92,20 @@ const useStyles = makeStyles((theme) => ({
                     }}
                     rows={1}
                     fullWidth
+                    sx={{fontSize: '1.5rem', fontWeight: 'bold'}}
                     />
                     <Box flexGrow={1} />
                     <Box>
                     <Button
                         variant="contained"
-                        color="primary"
+                        sx={{backgroundColor: "#645c5c"}}
                         onClick={handleCommentEdit}
                     >
                         Save
                     </Button>
                     <Button
                         variant="contained"
-                        color="secondary"
+                        sx={{backgroundColor: "#e66288"}}
                         onClick={() => setIsEditing(false)}
                     >
                         Cancel
@@ -132,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
                 ) : (
                 <Box display="flex" alignItems="center">
                     <Box flexGrow={1}>
-                    <Typography variant="body1">{comment.comment}</Typography>
+                    <Typography sx={{ fontSize: '1.5rem' }} fontWeight="bold" component='span'>{comment.comment}</Typography>
                     </Box>
                     {id === comment.user.id && (
                     <Box>
@@ -147,8 +130,8 @@ const useStyles = makeStyles((theme) => ({
                 </Box>
                 )}
             </Box>
-            </Box>
-        );
-    }
+        </Box>
+    );
+}
 
 export default EditComment;

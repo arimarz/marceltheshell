@@ -71,8 +71,7 @@ class Post(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String, nullable=False)
     quote = db.Column(db.String, nullable= False)
-    #audio = db.Column ??
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_at = db.Column(db.DateTime, nullable=True, server_default=db.func.now())
     original = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     likes = db.relationship('Like', backref='post')
@@ -112,6 +111,7 @@ class Like(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    __table_args__ = (db.UniqueConstraint('user_id', 'post_id', name='user_post_unique'),) #no doubles
     
 
 class Comment(db.Model, SerializerMixin):
@@ -121,6 +121,7 @@ class Comment(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    serialize_rules = ('-post',)
 
 # class PostTag(db.Model, SerializerMixin):
 #     __tablename__ = 'post_tags'

@@ -79,13 +79,13 @@ function Profile({user}) {
         return (
         <Card sx={{backgroundColor: '#645c5c', marginBottom: '30px',}}>
                     <CardHeader
-                        style={{ fontSize: '5rem' }} 
-                        avatar={<Avatar src={avatar} style={{ width: 70, height: 70 }} />} 
+                        sx={{ fontSize: '5rem' }} 
+                        avatar={<Avatar src={avatar} sx={{ width: 70, height: 70 }} />} 
                         title={
-                            <span style={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.5rem' }}>{post.quote}</span> 
+                            <span sx={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.5rem' }}>{post.quote}</span> 
                         }
                         // subheader={
-                        //     <span style={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.25rem' }}>
+                        //     <span sx={{ fontFamily: 'Comic Sans MS, sans-serif', fontWeight: 'bold', fontSize: '1.25rem' }}>
                         //         {randomDate().toDateString()}
                         //     </span> // Set Date later
                         // }
@@ -109,7 +109,7 @@ function Profile({user}) {
                 marginTop="20px"
                 marginBottom="20px"
                 >
-                <Avatar src={avatar} style={{ width: 200, height: 200, marginRight: "20px" }} />
+                <Avatar src={avatar} sx={{ width: 200, height: 200, marginRight: "20px" }} />
                 <Box display="flex" flexDirection="column">
                     <h3>Name: {name}</h3>
                     <h3>User: {username}</h3>

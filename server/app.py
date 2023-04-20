@@ -34,7 +34,7 @@ class Posts(Resource):
         start = (page - 1) * per_page
         end = start + per_page
         
-        posts = [post.to_dict(rules= ('is_liked', 'liked_amount', 'comments', '-likes.post_id', '-likes.user_id', '-comments.post_id', '-comments.user_id')) for post in Post.query.order_by(Post.created_at.desc()).slice(start, end)]
+        posts = [post.to_dict(rules= ('is_liked', 'liked_amount', 'comments', '-likes.post_id', '-likes.user_id', '-comments.user_id')) for post in Post.query.order_by(Post.id).slice(start, end)]
         response = make_response(
             posts,
             200
