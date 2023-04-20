@@ -1,7 +1,7 @@
 from random import random, randint, choice as rc
 from app import app
 from models import db, User, Post, Comment, Like
-from datetime import datetime
+from datetime import datetime, timedelta
 # User, Post, Like, Comment
 
 video = './videos/'
@@ -73,17 +73,21 @@ print('posts created')
 
 # Add posts to database
 def make_posts():
-
     Post.query.delete()
 
     posts = []
 
     for post_dict in posts_list:
+
+        days_ago = randint(1, 10000)
+        created_at = datetime.now() - timedelta(days=days_ago)
+
         post = Post(
             quote=post_dict["quote"],
             original=post_dict["original"],
             user_id=post_dict['user_id'],
-            image=post_dict["image"]
+            image=post_dict["image"],
+            created_at=created_at 
         )
         posts.append(post)
 
@@ -92,12 +96,19 @@ def make_posts():
 print('posts committed')
 
 print('creating likes')
-likes_list = []
+likes_set = set()
 
 for i in range(100):
-    user_id = randint(1, 13)
-    post_id = randint(1, 22)
-    likes_list.append({'user_id': user_id, 'post_id': post_id})
+    while True:
+        user_id = randint(1, 13)
+        post_id = randint(1, 22)
+        pair = (user_id, post_id)
+        # If the pair is not in the set, add it and break the loop
+        if pair not in likes_set:
+            likes_set.add(pair)
+            break
+
+likes_list = [{'user_id': pair[0], 'post_id': pair[1]} for pair in likes_set]
 print('likes created')
 
 # Add likes to database

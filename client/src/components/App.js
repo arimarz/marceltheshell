@@ -3,8 +3,9 @@ import UserContext from './UserContext';
 import { BrowserRouter, Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { Flex, Box } from "@chakra-ui/react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import '../custom-font.css';
-import { makeStyles } from '@mui/styles';
+import FirstTimeWriting from '../fonts/firsttime.ttf'; 
+import Kinder from '../fonts/Kindergarten.ttf';
+import Arsenale from '../fonts/Arsenale-White-trial.ttf'
 
 import Home from './Home.js';
 import Login from './Login.js';
@@ -16,33 +17,45 @@ import Header from './Header.js';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#3f51b5',
+            main: '#e66288',
         },
         secondary: {
-            main: '#f50057',
+            main: '#e66288',
         },
+        error: {
+            main: '#e66288',
         },
-        typography: {
-        fontFamily: 'FirstTimeWriting!, Comic Sans MS, sans-serif',
+        background: {
+            default: '#747c74',
         },
-        spacing: 8,
-    });
-
-    const useStyles = makeStyles((theme) => ({
-        loginPage: {
-            backgroundImage: "url('https://ca-times.brightspotcdn.com/dims4/default/862760b/2147483647/strip/true/crop/2798x1800+0+0/resize/1200x772!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe8%2Fae%2Fcc66c9a140d69470e3346945287f%2Fenv-marcel-the-shell-family.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '100vh',
-            },
-        }));
-        
+    },
+    typography: {
+        fontFamily: "Kinder, FirstTimeWriting, Arsenale",
+    },
+    spacing: 8,
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: `@font-face {
+                font-family: 'FirstTimeWriting';
+                src: url(${FirstTimeWriting}) format('truetype');
+                }
+                @font-face {
+                    font-family: 'Kinder';
+                    src: url(${Kinder}) format('truetype');
+                }
+                @font-face {
+                    font-family: 'Arsenale';
+                    src: url(${Arsenale}) format('truetype');
+                }
+            `
+        },
+    },
+});
 
 function App() {
     const [user, setUser] = useState(null);
     const history = useHistory();
     const location = useLocation();
-    const classes = useStyles();
     const [userFetched, setUserFetched] = useState(false);
 
     useEffect(() => {
@@ -64,44 +77,42 @@ function App() {
             setUserFetched(true);
         })
         )
-        // useEffect(() => {
-        //     if (userFetched && !user) {
-        //         history.push('/login');
-        //     }
-        // }, [user, userFetched, history]);
         
-    return (
-        <UserContext.Provider value={{ user, setUser }}>
-            <Flex flexDirection="row" height="100vh">
-                <Box bg="#7f7c5b" color="#7f7c5b" width="250px" position='fixed' zIndex={100}>
-                <NavBar />
+        return (
+            <UserContext.Provider value={{ user, setUser }}>
+                <Box bg='#747c74' display="grid" gridTemplateColumns="270px 1fr" minHeight="100vh">
+                    <NavBar />
+                    <Box minHeight='100vh'>
+                        <Box>
+                            {location.pathname !== "/login" && <Header />}
+                        </Box>
+                        <Box flexGrow={1}
+                            sx={{
+                                backgroundImage: location.pathname === "/login" ? "url('https://ca-times.brightspotcdn.com/dims4/default/862760b/2147483647/strip/true/crop/2798x1800+0+0/resize/1200x772!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe8%2Fae%2Fcc66c9a140d69470e3346945287f%2Fenv-marcel-the-shell-family.jpg')" : '',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center'
+                            }}>
+                            <Switch>
+                                <Route path="/" exact>
+                                    <Home />
+                                </Route>
+                                <Route exact path="/login">
+                                    <Login />
+                                </Route>
+                                <Route path="/profile/:id" exact>
+                                    <Profile />
+                                </Route>
+                                <Route path="/post/create" exact>
+                                    <NewPost />
+                                </Route>
+                            </Switch>
+                        </Box>
+                        </Box>
                 </Box>
-                <Flex flexDirection="column" flexGrow={1}>
-                    {location.pathname !== '/login' && <Header position="relative" zIndex={50} />}
-                    <Box className={location.pathname === '/login' ? classes.loginPage : ''} flexGrow={1}>
-                        <Switch>
-                    <Route path="/" exact>
-                        <Home />
-                    </Route>
-                    <Route exact path="/login">
-                        <Login />
-                    </Route>
-                    <Route path="/profile/:id" exact>
-                        <Profile />
-                    </Route>
-                    <Route path="/post/create" exact>
-                        <NewPost />
-                    </Route>
-                    </Switch>
-                </Box>
-                </Flex>
-            </Flex>
-            </UserContext.Provider>
-        );
-    }
+                </UserContext.Provider>
+            );
+}
 
-
-//export default App;
 function WrappedApp() {
         return (
         <ThemeProvider theme={theme}>

@@ -1,20 +1,11 @@
 import React, { useState, useContext } from 'react';
 import UserContext from './UserContext';
 import liked from '../pictures/liked_shell.png'
-import unliked from '../pictures/unliked_shell.jpg'
+import unliked from '../pictures/unliked_shell.png'
 import EditComment from './EditComment.js';
 import Video from './Video.js';
-import { makeStyles } from '@mui/styles';
 import { Card, CardHeader, Avatar, Typography, Box, IconButton, CardActions, Collapse, CardContent, Button, TextField, Link, styled } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-
-const useStyles = makeStyles({
-    media: {
-        height: 0,
-        paddingTop: '100%',
-    }
-})
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -31,7 +22,6 @@ const ExpandMore = styled((props) => {
     function Post({ post, setPosts}) {
         const userGrab = useContext(UserContext)
         const [commentValue, setCommentValue] = useState("");
-        const { media } = useStyles()
         const [expanded, setExpanded] = useState(false);
         const [showAllComments, setShowAllComments] = useState(false);
         if (!userGrab.user) return 'Loading'
@@ -108,8 +98,10 @@ const ExpandMore = styled((props) => {
                     }
                 })
                 .then((newComment) => {
+                    console.log(newComment)
                     setPosts((posts) => {
-                    return posts.map((onePost) => {
+                        return posts.map((onePost) => {
+                        console.log(onePost.comments)
                         if (onePost.id === post.id) {
                         const updatedComments = [...onePost.comments, newComment];
                         return { ...onePost, comments: updatedComments };
@@ -134,32 +126,34 @@ const ExpandMore = styled((props) => {
                 return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
             };
             return (
-                <Card sx={{ backgroundColor: '#645c5c', marginBottom: '30px' }}>
+                <Card sx={{ backgroundColor: '#b4b4ac', marginTop: '30px' }}>
                     <CardHeader
-                        avatar={<Avatar src={post.user.avatar} style={{ width: 70, height: 70 }} />}
+                        avatar={<Avatar src={post.user.avatar} sx={{ width: 70, height: 70, borderRadius: '50%', border: '3px solid #544a2a' }} />}
                         title={
-                            <Typography variant="h5" fontWeight="bold">
+                            <Typography variant="h4" fontWeight="bold">
                                 {quote}
                             </Typography>
                         }
                         subheader={
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                {randomDate().toDateString()}
+                            <Typography variant="h5" fontWeight="bold">
+                                {new Date(post.created_at).toDateString()}
                             </Typography>
                         }
                     />
                     <Box display="flex" justifyContent="center">
                         <Video image={image} />
                     </Box>
-                    <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <IconButton onClick={handleLikeClick} style={{ fontSize: '3.5rem' }}>
+                    <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <IconButton onClick={handleLikeClick} sx={{ fontSize: '3.5rem' }}>
                             <Box display="flex" alignItems="center">
                                 <img
                                     aria-label="like"
                                     src={post.is_liked ? liked : unliked}
                                     style={{ width: 100 }}
                                 />
-                                <Box ml={1}>{post.liked_amount}</Box>
+                                <Box ml={1} fontFamily="Kinder">
+                                    {post.liked_amount}
+                                </Box>
                             </Box>
                         </IconButton>
                         <ExpandMore
@@ -168,29 +162,36 @@ const ExpandMore = styled((props) => {
                             aria-expanded={expanded}
                             aria-label="show more"
                         >
-                            <ExpandMoreIcon style={{ fontSize: '4rem' }} />
+                            <ExpandMoreIcon sx={{ fontSize: '4rem' }} />
                         </ExpandMore>
                     </CardActions>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
                             {commentItems}
                             <form onSubmit={handleCommentSubmit}>
-                            <Box sx={{ p: 'var(--Card-padding)', display: 'flex' }}>
-                                <IconButton size="small" sx={{ ml: -1 }}>
-                                <Avatar src={avatar} />
-                                </IconButton>
-                                <TextField
-                                size="small"
-                                placeholder="Add a comment…"
-                                value={commentValue}
-                                onChange={handleCommentChange}
-                                sx={{ flexGrow: 1, mr: 1 }}
-                                />
-                                <Button type="submit" variant="contained" color="primary">
-                                Post
-                                </Button>
-                            </Box>
-</form>
+                                <Box sx={{ p: 'var(--Card-padding)', display: 'flex' }}>
+                                    <IconButton size="small" sx={{ ml: -1 }}>
+                                        <Avatar src={avatar} sx={{ width: 45, height: 45, borderRadius: '50%', border: '3px solid #544a2a' }}/>
+                                    </IconButton>
+                                    <TextField
+                                        size="small"
+                                        placeholder="Add a comment…"
+                                        value={commentValue}
+                                        onChange={handleCommentChange}
+                                        sx={{ flexGrow: 1, mr: 1 }}
+                                        InputProps={{
+                                            sx: {
+                                            fontSize: '1.5rem',
+                                            fontWeight:"bold",
+                                            '&:focus': { color: '#544a2a' },
+                                            }
+                                        }}
+                                        />
+                                    <Button type="submit" variant="contained" sx={{backgroundColor: "#645c5c"}}>
+                                        Post
+                                    </Button>
+                                </Box>
+                            </form>
                         </CardContent>
                     </Collapse>
                 </Card>

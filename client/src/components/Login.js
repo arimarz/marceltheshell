@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Modal from 'react-modal';
-import { makeStyles } from '@mui/styles';
 import Paper from '@mui/material/Paper';
 
 const initialValuesSignUp = {
@@ -31,25 +30,9 @@ const signUpValidationSchema = Yup.object().shape({
     avatar: Yup.string().required('Required'),
 });
 
-const useStyles = makeStyles((theme) => ({
-    loginForm: {
-        padding: theme.spacing(2),
-        borderRadius: theme.shape.borderRadius,
-        boxShadow: theme.shadows[1],
-    },
-    loginContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        paddingTop: '450px',
-    },
-}));
-
 function Login({user}) {
     const history = useHistory();
     const [showSignUp, setShowSignUp] = useState(false);
-    const classes = useStyles();
 
     const initialValues = {
         username: '',
@@ -118,8 +101,8 @@ function Login({user}) {
     }
 
     return (
-        <div className={classes.loginContainer}>
-        <Paper className={classes.loginForm} sx={{backgroundColor: 'rgba(75,88,91,255)'}} elevation={1}>
+        <div sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', paddingTop: '450px' }}>
+            <Paper sx={{ padding: 2, borderRadius: 1, boxShadow: 1, backgroundColor: 'rgba(75,88,91,255)' }} elevation={1}>
         <p>LOG IN</p>
         <Formik
         initialValues={initialValues}
