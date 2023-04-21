@@ -100,130 +100,155 @@ function Login({user}) {
         setShowSignUp(prevState => !prevState);
     }
 
-    return (
-        <div style={{  display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        bottom: '35px',
-        left: '50%',
-        transform: 'translateX(-50%)' }}>
-            <Paper sx={{ padding: 2, borderRadius: 1, boxShadow: 1, backgroundColor: 'rgba(75,88,91,255)' }} elevation={1}>
-        <p>LOG IN</p>
-        <Formik
-        initialValues={initialValues}
-        onSubmit={handleLogin}
-        validationSchema={validationSchema}
-        >
-        {props => (
-            <Form onSubmit={props.handleSubmit}>
-            <div>
-            <Field
-                type="text"
-                name="username"
-                placeholder="Username"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.username}
-            />
-                {props.errors.username && <div id="feedback">{props.errors.username}</div>}
-            </div>
-            <div>
-                <Field
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.password}
-                />
-                {props.errors.password && <div id="feedback">{props.errors.password}</div>}
-            </div>
-            <button type="submit" disabled={props.isSubmitting}>
-                Log In
-            </button>
-            <button type="button" onClick={toggleSignUp}>
-                Create Account
-            </button>
-            {props.errors.general && <div id="feedback">{props.errors.general}</div>}
-            </Form>
-        )}
-        </Formik>
-        {showSignUp && (
-            <div className="modal">
-                <div className="modal-content">
-                <button className="close-button" onClick={toggleSignUp}>
-                X
-                </button>
-                <h2>Create an Account</h2>
-                <Formik
-                initialValues={initialValuesSignUp}
-                validationSchema={signUpValidationSchema}
-                onSubmit={handleSignUp}
-                >
-                {props => (
-                    <Form onSubmit={props.handleSubmit}>
-                        <div>
-                        <Field
-                        type="username"
-                        name="username"
-                        placeholder="Username"
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.username}
-                        />
-                        {props.errors.username && <div id="feedback">{props.errors.username}</div>}
-                    </div>
-                    <div>
-                        <Field
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.password}
-                        />
-                        {props.errors.password && <div id="feedback">{props.errors.password}</div>}
-                    </div>
-                    <div>
-                        <Field
-                        type="name"
-                        name="name"
-                        placeholder="Name"
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.name}
-                        />
-                        {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-                    </div>
-                    <div>
-                        <Field
-                        type="avatar"
-                        name="avatar"
-                        placeholder="Avatar"
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.avatar}
-                        />
-                        {props.errors.avatar && <div id="feedback">{props.errors.avatar}</div>}
-                    </div>
-                    <button type="submit" disabled={props.isSubmitting}>
-                        Create Account
-                    </button>
-                    <button type="button" onClick={toggleSignUp}>
+
+        return (
+            <div
+                style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                bottom: '35px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                }}
+            >
+                    <Paper
+                        sx={{
+                        padding: 2,
+                        borderRadius: 1,
+                        boxShadow: 1,
+                        backgroundColor: 'rgba(75,88,91,255)',
+                        }}
+                        elevation={1}
+                    >
+                        {!showSignUp ? (
+                        <>
+                            <p>LOG IN</p>
+                            <Formik
+                            initialValues={initialValues}
+                            onSubmit={handleLogin}
+                            validationSchema={validationSchema}
+                            >
+                            {props => (
+                                <Form onSubmit={props.handleSubmit}>
+                                <div>
+                                    <Field
+                                    type="text"
+                                    name="username"
+                                    placeholder="Username"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    value={props.values.username}
+                                    />
+                                    {props.errors.username && (
+                                    <div id="feedback">{props.errors.username}</div>
+                                    )}
+                                </div>
+                                <div>
+                                    <Field
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    value={props.values.password}
+                                    />
+                                    {props.errors.password && (
+                                    <div id="feedback">{props.errors.password}</div>
+                                    )}
+                                </div>
+                                <button type="submit" disabled={props.isSubmitting}>
+                                    Log In
+                                </button>
+                                <button type="button" onClick={toggleSignUp}>
+                                    Create Account
+                                </button>
+                                </Form>
+                            )}
+                            </Formik>
+                        </>
+                        ) : (
+                        <>
+                            <p>SIGN UP</p>
+                            <Formik
+                            initialValues={initialValuesSignUp}
+                            validationSchema={signUpValidationSchema}
+                            onSubmit={handleSignUp}
+                            >
+                            {props => (
+                                <Form onSubmit={props.handleSubmit}>
+                                <div>
+                                    <Field
+                                    type="username"
+                                    name="username"
+                                    placeholder="Username"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    value={props.values.username}
+                                    />
+                                    {props.errors.username && (
+                                    <div id="feedback">{props.errors.username}</div>
+                                    )}
+                                </div>
+                                <div>
+                                    <Field
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    value={props.values.password}
+                                    />
+                                    {props.errors.password && (
+                                    <div id="feedback">{props.errors.password}</div>
+                                    )}
+                                </div>
+                                <div>
+                                    <Field
+                                    type="name"
+                                    name="name"
+                                    placeholder="Name"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    value={props.values.name}
+                                    />
+                                    {props.errors.name && (
+                                    <div id="feedback">{props.errors.name}</div>
+                                    )}
+                                </div>
+                                <div>
+                                    <Field
+                                    type="avatar"
+                                    name="avatar"
+                                    placeholder="Avatar"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    value={props.values.avatar}
+                                    />
+                                    {props.errors.avatar && (
+                                    <div id="feedback">{props.errors.avatar}</div>
+                                    )}
+                                </div>
+                                <button type="submit" disabled={props.isSubmitting}>
+                                    Create Account
+                                </button>
+                                <button type="button" onClick={toggleSignUp}>
                         Cancel
-                    </button>
-                    {props.errors.general && <div id="feedback">{props.errors.general}</div>}
+                        </button>
+                        {props.errors.general && (
+                        <div id="feedback">{props.errors.general}</div>
+                        )}
                     </Form>
                     )}
                 </Formik>
-            </div>
-            </div>
-        )}
-        </Paper>
+                </>
+            )}
+            </Paper>
         </div>
-    )
+        );
+
 }
 
 export default Login;
