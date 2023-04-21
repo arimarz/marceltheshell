@@ -24,8 +24,11 @@ if database is there skip 3-6
 
 This should show up in your browser!
 
-
-https://user-images.githubusercontent.com/121208430/233514543-67d2adbc-b43c-4b97-945e-9598e64cad4c.mp4
+##Visual
+<video width="320" height="240" controls>
+  <source src="client/public/videos/MarcelsShellGitHubdemo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 
 
