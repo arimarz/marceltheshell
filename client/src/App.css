@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.loginBackground {
+  background-image: url('https://ca-times.brightspotcdn.com/dims4/default/862760b/2147483647/strip/true/crop/2798x1800+0+0/resize/1200x772!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe8%2Fae%2Fcc66c9a140d69470e3346945287f%2Fenv-marcel-the-shell-family.jpg');
+  background-size: cover;
+  background-position: center;
+}

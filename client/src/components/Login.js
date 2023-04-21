@@ -101,7 +101,14 @@ function Login({user}) {
     }
 
     return (
-        <div sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', paddingTop: '450px' }}>
+        <div style={{  display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: '35px',
+        left: '50%',
+        transform: 'translateX(-50%)' }}>
             <Paper sx={{ padding: 2, borderRadius: 1, boxShadow: 1, backgroundColor: 'rgba(75,88,91,255)' }} elevation={1}>
         <p>LOG IN</p>
         <Formik
