@@ -24,7 +24,7 @@ if database is there skip 3-6
 
 This should show up in your browser!
 
-##Visual
+## Visual
 <video width="320" height="240" controls>
   <source src="client/public/videos/MarcelsShellGitHubdemo.mp4" type="video/mp4">
   Your browser does not support the video tag.
