@@ -26,7 +26,7 @@ This should show up in your browser!
 
 ## Visual
 <video width="320" height="240" controls>
-  <source src="client/public/videos/MarcelsShellGitHubdemo.mp4" type="video/mp4">
+  <source src="./client/public/videos/MarcelsShellGitHubdemo.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
